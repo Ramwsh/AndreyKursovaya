@@ -1,0 +1,127 @@
+<UserControl
+    x:Class="AndreyKursovaya.Views.SupplyView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:AndreyKursovaya.ViewModels"
+    d:DesignHeight="700"
+    d:DesignWidth="1100"
+    x:DataType="vm:SupplyViewModel"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:SupplyViewModel />
+    </UserControl.DataContext>
+    <Grid Margin="5,100" RowDefinitions="Auto,Auto,Auto">
+        <StackPanel		
+			Background="#3e3e3e"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            Spacing="10">
+            <TextBlock>ID поставки</TextBlock>
+            <TextBlock Margin="10,0">ID товара</TextBlock>
+            <TextBlock Margin="10,0">ID поставщика</TextBlock>
+            <TextBlock Margin="10,0">Количество товара</TextBlock>
+            <TextBlock Margin="10,0">Цена товара</TextBlock>
+            <TextBlock Margin="100,0">Дата поставки</TextBlock>
+        </StackPanel>
+		<StackPanel
+			Background="#3e3e3e"
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            Orientation="Horizontal"
+            Spacing="10">
+            <TextBox Width="80" Text="{Binding Id, Converter={StaticResource Int32Converter}}" />
+            <TextBox Width="80" Text="{Binding ProductId, Converter={StaticResource Int32Converter}}" />
+            <TextBox
+                Width="100"
+                Margin="10,0"
+                Text="{Binding SupplierId, Converter={StaticResource Int32Converter}}" />
+            <TextBox
+                Width="110"
+                Margin="10,0"
+                Text="{Binding QuantityProduct, Converter={StaticResource Int32Converter}}" />
+            <TextBox Width="120" Text="{Binding SupplyPrice, Converter={StaticResource Int32Converter}}" />
+            <DatePicker SelectedDate="{Binding SupplyDate}" />
+        </StackPanel>
+        <Grid
+            Grid.Row="2"
+            Margin="0,30"
+            ColumnDefinitions="Auto, Auto">
+            <Border Grid.Column="0" Width="950" Height="500">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Orientation="Horizontal">
+                        <ListBox ItemsSource="{Binding Supplies}" SelectedItem="{Binding SelectedSupply}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+										Width="1000"
+										Background="#3e3e3e"
+                                        Margin="0,5"
+                                        Orientation="Vertical"
+                                        Spacing="5">
+                                        <TextBlock>
+                                            <Run>ID поставки:</Run>
+                                            <Run Text="{Binding SupplyID}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>ID товара:</Run>
+                                            <Run Text="{Binding ProductID}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>ID поставщика:</Run>
+                                            <Run Text="{Binding SupplierID}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Количество товара:</Run>
+                                            <Run Text="{Binding QuantityProduct}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Цена товара (руб):</Run>
+                                            <Run Text="{Binding SupplyPrice}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Дата доставки:</Run>
+                                            <Run Text="{Binding SupplyDate}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <StackPanel
+				Background="#3e3e3e"
+				Width="200"
+                Grid.Column="1"
+                Orientation="Vertical"
+                Spacing="5">
+                <Button
+					Margin="25,5"
+					VerticalAlignment="Center"					
+                    Width="100"
+                    Background="Green"
+                    Command="{Binding CreateSupplyCommand}">
+                    Добавить
+                </Button>
+				<Button
+					Margin="25,5"
+					VerticalAlignment="Center"					
+                    Width="100"
+                    Background="PaleVioletRed"
+                    Command="{Binding DeleteSupplyCommand}">
+                    Удалить
+                </Button>
+				<Button
+					Margin="25,5"
+					VerticalAlignment="Center"					
+                    Width="100"
+                    Background="Goldenrod"
+                    Command="{Binding UpdateSupplyCommand}">
+                    Изменить
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

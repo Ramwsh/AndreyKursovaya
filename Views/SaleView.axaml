@@ -1,0 +1,124 @@
+<UserControl
+    x:Class="AndreyKursovaya.Views.SaleView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:AndreyKursovaya.ViewModels"
+    d:DesignHeight="700"
+    d:DesignWidth="1100"
+    x:DataType="vm:SaleViewModel"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:SaleViewModel />
+    </UserControl.DataContext>
+    <Grid Margin="5,100" RowDefinitions="Auto,Auto,Auto">
+        <StackPanel
+            Grid.Row="0"
+            Background="#3e3e3e"
+            Orientation="Horizontal"
+            Spacing="10">
+            <TextBlock>ID продажи</TextBlock>
+            <TextBlock Margin="10,0">ID товара</TextBlock>
+            <TextBlock Margin="10,0">Количество товара</TextBlock>
+            <TextBlock Margin="10,0">Цена товара</TextBlock>
+            <TextBlock Margin="100,0">Дата продажи</TextBlock>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            Background="#3e3e3e"
+            Orientation="Horizontal"
+            Spacing="10">
+            <TextBox Width="80" Text="{Binding SaleId, Converter={StaticResource Int32Converter}}" />
+            <TextBox Width="80" Text="{Binding ProductId, Converter={StaticResource Int32Converter}}" />
+            <TextBox
+                Width="100"
+                Margin="10,0"
+                Text="{Binding QuantitySaleProduct, Converter={StaticResource Int32Converter}}" />
+            <TextBox
+                Width="110"
+                Margin="10,0"
+                Text="{Binding SalePrice, Converter={StaticResource Int32Converter}}" />
+            <DatePicker SelectedDate="{Binding SaleDate}" />
+        </StackPanel>
+        <Grid
+            Grid.Row="2"
+            Margin="0,30"
+            ColumnDefinitions="Auto, Auto">
+            <Border
+                Grid.Column="0"
+                Width="950"
+                Height="500">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Orientation="Horizontal">
+                        <ListBox ItemsSource="{Binding Sales}" SelectedItem="{Binding SelectedSale}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+                                        Width="1000"
+                                        Margin="0,5"
+                                        Background="#3e3e3e"
+                                        Orientation="Vertical"
+                                        Spacing="5">
+                                        <TextBlock>
+                                            <Run>ID продажи:</Run>
+                                            <Run Text="{Binding SaleID}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>ID товара:</Run>
+                                            <Run Text="{Binding ProductID}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Дата продажи:</Run>
+                                            <Run Text="{Binding SaleDate}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Количество товара в продаже:</Run>
+                                            <Run Text="{Binding QuantitySaleProduct}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run>Цена:</Run>
+                                            <Run Text="{Binding SalePrice}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <StackPanel
+                Grid.Column="1"
+                Width="200"
+                Background="#3e3e3e"
+                Orientation="Vertical"
+                Spacing="5">
+                <Button
+                    Width="100"
+                    Margin="25,5"
+                    VerticalAlignment="Center"
+                    Background="Green"
+                    Command="{Binding CreateSaleCommand}">
+                    Добавить
+                </Button>
+                <Button
+                    Width="100"
+                    Margin="25,5"
+                    VerticalAlignment="Center"
+                    Background="PaleVioletRed"
+                    Command="{Binding DeleteSaleCommand}">
+                    Удалить
+                </Button>
+                <Button
+                    Width="100"
+                    Margin="25,5"
+                    VerticalAlignment="Center"
+                    Background="Goldenrod"
+                    Command="{Binding UpdateSaleCommand}">
+                    Изменить
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
